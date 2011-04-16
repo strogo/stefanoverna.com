@@ -9,10 +9,13 @@ html lang="en"
       .page-content
 
         .post
+          - if @item.attributes[:image]
+            img src=@item.attributes[:image]
 
           h2== link_to @item.attributes[:title], @item.attributes[:external_link] || url_for(@item), :class => (@item.attributes[:external_link] ? "external" : "")
 
-          .content== yield
+          .content
+            == yield
 
           - if @item.attributes[:kind] == "article"
             ul.actions

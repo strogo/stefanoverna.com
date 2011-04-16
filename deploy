@@ -1,0 +1,3 @@
+#!/bin/bash
+
+nanoc_env=production nanoc co && rake deploy:rsync

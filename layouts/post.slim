@@ -1,0 +1,26 @@
+doctype 5
+html lang="en"
+  head
+    == render "head"
+  body
+    .wrap
+      == render "sidebar"
+
+      .page-content
+
+        .post
+
+          h2== link_to @item.attributes[:title], @item.attributes[:external_link] || url_for(@item), :class => (@item.attributes[:external_link] ? "external" : "")
+
+          .content== yield
+
+          - if @item.attributes[:kind] == "article"
+            ul.actions
+              li.permalink== link_to "Permalink", url_for(@item)
+              li.date= Date.parse(@item.attributes[:created_at])
+              li.comments== link_to "Commenta", "javascript:void(0);", :class => "tweet"
+
+        - if @item.attributes[:kind] == "article"
+          ul.tweets(data-twitter-related-to=url_for(@item))
+
+  == render "footer"

@@ -1,0 +1,12 @@
+doctype 5
+html lang="en"
+  head
+    == render "head"
+  body
+    .wrap
+      == render "sidebar"
+
+      .page-content
+        == yield
+
+  == render "footer"

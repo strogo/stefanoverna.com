@@ -1,0 +1,95 @@
+#!/usr/bin/env ruby
+
+# A few helpful tips about the Rules file:
+#
+# * The order of rules is important: for each item, only the first matching
+#   rule is applied.
+#
+# * Item identifiers start and end with a slash (e.g. “/about/” for the file
+#   “content/about.html”). To select all children, grandchildren, … of an
+#   item, use the pattern “/about/*/”; “/about/*” will also select the parent,
+#   because “*” matches zero or more characters.
+
+require 'compass'
+
+Compass.add_project_configuration 'compass/config.rb' # when using Compass 0.10
+
+preprocess do
+  ENV['nanoc_env'] ||= "development"
+  if ENV['nanoc_env'] == "development"
+    @config[:base_url] = "http://0.0.0.0:3000"
+  else
+    @config[:base_url] = "http://stefanoverna.com"
+  end
+end
+
+compile 'assets/images/*' do
+  # no-op
+end
+
+compile 'assets/javascripts/*' do
+  # no-op
+end
+
+compile 'pages/*' do
+  case item[:extension]
+    when 'md'
+      filter :rdiscount
+      filter :rubypants
+      layout 'post'
+    when 'slim'
+      filter :slim
+      layout 'default'
+  end
+end
+
+compile '/blog/feed/' do
+  filter :erb
+end
+
+compile 'blog/*' do
+  filter :rdiscount
+  filter :code_classifier, :pre_class => "highlight"
+  filter :colorize_syntax, :colorizers => {:ruby => :pygmentize}
+  filter :rubypants
+  layout 'post'
+end
+
+compile 'assets/stylesheets/*' do
+  filter :sass, Compass.sass_engine_options unless item.identifier.match /\_/
+end
+
+route '/assets/stylesheets/*' do
+  "#{item.identifier.chop}.css" unless item.identifier.match /\_/
+end
+
+route '/assets/images/favicon' do
+  "/favicon.ico"
+end
+
+route '/assets/images/*' do
+  "#{item.identifier.chop}.#{item[:extension]}"
+end
+
+route '/assets/javascripts/*' do
+  "#{item.identifier.chop}.#{item[:extension]}"
+end
+
+route '/pages' do
+  "/index.html"
+end
+
+route '/pages/*' do
+  "#{item.identifier.chop}.html"
+end
+
+route '/blog/feed/' do
+  '/feed.xml'
+end
+
+route '/blog/*' do
+  "#{item.identifier.chop}.html"
+end
+
+layout 'pjax', :erb
+layout '*', :slim

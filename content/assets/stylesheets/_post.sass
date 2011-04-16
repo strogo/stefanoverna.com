@@ -1,0 +1,104 @@
+.post
+    
+  p, ol, blockquote
+    :line-height 21px
+    :margin 21px 0px
+    
+  blockquote
+    :margin-left 50px
+    :color #666
+    :position relative
+    :font-style italic
+
+    &:before
+      :color #666
+      :display block
+      :font-size 80px
+      :position absolute
+      :content '\201C'
+      :top 21px
+      :left -40px
+
+  ul
+
+    li
+      :list-style-type circle
+      :margin-left 20px
+      :margin-bottom 5px
+
+  h2
+    :font-family "Kreon", sans-serif
+    :font-size 35px
+    :line-height 40px
+
+  h3
+    :font-family "Kreon", sans-serif
+    :font-size 25px
+    :line-height 25px
+    :padding-top 10px
+  
+  h1, h2, h3
+    a
+      :display block
+      :color #42413F
+
+      &:hover
+        :color #61B215
+        
+  a.external:after
+    :content '\00a0 \21D2'
+  
+  .actions
+    +clearfix
+    
+    li
+      :margin 0px
+      :list-style-type none
+      :float left
+      :width 33%
+    
+      &.date
+        :text-align center
+        :margin 0px
+        :font-style italic
+        :color #999
+      
+      &.comments
+        :text-align right
+       
+.tweets
+  :line-height 21px
+  :margin-top 40px
+  :padding-top 50px
+  :border-top 5px solid #254470
+  
+  li
+    :margin-bottom 15px
+    :position relative
+    
+    img
+      :position absolute
+      :left 0px
+      :top 0px
+      :height 40px
+      :width 40px
+      +border-radius(2px)
+      
+    .from
+      :margin-left 58px
+      :font-family "Kreon", sans-serif
+      :display block
+      :font-size 16px
+      :color #666
+      
+    .text
+      :margin-left 58px
+      :display block
+      :font-size 15px
+      
+    .created_at
+      :display block
+      :margin-left 58px
+      :text-align right
+      :font-size 15px
+      :color #999

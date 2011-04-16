@@ -1,0 +1,9 @@
+---
+title: Home
+---
+
+ul.archive
+  - sorted_articles.each do |post|
+    li
+      p.date= Date.parse(post.attributes[:created_at])
+      h2== link_to post.attributes[:title], url_for(post)

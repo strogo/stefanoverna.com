@@ -1,24 +1,24 @@
 .sidebar
 
-  .logo
-    .t1
-    .f1
-    .f2
-    .f3
-    .h1
-    .h2
-    .h3
-    .t2
-    .t3
-    .g1
-    .g2
-    .g3
+  a.logo(href="/" title="Stefano Verna")
+    span.t1
+    span.f1
+    span.f2
+    span.f3
+    span.h1
+    span.h2
+    span.h3
+    span.t2
+    span.t3
+    span.g1
+    span.g2
+    span.g3
 
   .header
     h1== link_to "Stefano Verna", "/"
     p.subtitle ruby, coffescript, rails, web development e facezie similari
 
   ul.navigation
-    li== link_to "Home", "/"
     li== link_to "Chi Sono", "/pages/chi-sono.html"
-    li== link_to "RSS", "http://feeds.feedburner.com/stefanoverna"
+    li== link_to "Archivio", "/"
+    li== link_to "Feed", "http://feeds.feedburner.com/stefanoverna", :class => "feed", :title => "Sottoscrivi il feed!"

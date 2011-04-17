@@ -1,0 +1,3 @@
+<% @items.select{|i| i.identifier.match /javascripts\/partials/ }.sort_by{|i| i.attributes[:order] }.each do |item| %>
+<%= item.compiled_content %>
+<% end %>

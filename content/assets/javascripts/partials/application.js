@@ -1,3 +1,7 @@
+---
+order: 100
+---
+
 $(document).ready(function(){
   jQuery.timeago.settings.strings = {
     suffixAgo: "fa",
@@ -39,6 +43,20 @@ $(document).ready(function(){
         $("<a/>").attr("href", "http://www.twitter.com/"+twitt.from_user+"/status/"+twitt.id_str).addClass("created_at").text(jQuery.timeago(twitt.created_at)).appendTo($li);
       });
     });
+  });
+
+  $("*[data-remote]").live("click", function() {
+    var link = $(this);
+    var url = link.attr("data-remote");
+    $.get(url, function(data) {
+      $('.day-archive:last').after(data);
+      link.remove();
+    });
+    return false;
+  });
+
+  $("*[data-mail-local-part]").each(function() {
+    $(this).attr("href", "mailto:" + $(this).attr("data-mail-local-part").split("").reverse().join("") + "@" + $(this).attr("data-mail-domain").split("").reverse().join(""));
   });
 
 });

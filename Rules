@@ -11,6 +11,8 @@
 #   because “*” matches zero or more characters.
 
 require 'compass'
+require 'i18n'
+require 'active_support'
 
 Compass.add_project_configuration 'compass/config.rb' # when using Compass 0.10
 
@@ -21,14 +23,30 @@ preprocess do
   else
     @config[:base_url] = "http://stefanoverna.com"
   end
+  ::I18n.backend.load_translations File.join('it.yml')
+  ::I18n.locale = :it
+
+  page_size = 15
+  (sorted_articles.size / page_size).ceil.times do |i|
+    @items << Nanoc3::Item.new(
+      "== render 'archive_page', :page_index => #{i}, :per_page => #{page_size}",
+      { :title => (i.zero? ? "Home" : "Archivio \/#{i+1}") },
+      i.zero? ? "/pages" : "/blog/archivio/pagina-#{i+1}"
+    )
+  end
 end
 
 compile 'assets/images/*' do
   # no-op
 end
 
-compile 'assets/javascripts/*' do
+compile 'assets/javascripts/partials/*' do
   # no-op
+end
+
+compile 'assets/javascripts/*' do
+  filter :erb
+  filter :yui if ENV['nanoc_env'] == "production"
 end
 
 compile 'pages/*' do
@@ -36,9 +54,11 @@ compile 'pages/*' do
     when 'md'
       filter :rdiscount
       filter :rubypants
+      filter :email_filter
       layout 'post'
-    when 'slim'
+    else
       filter :slim
+      filter :email_filter
       layout 'default'
   end
 end
@@ -47,11 +67,21 @@ compile '/blog/feed/' do
   filter :erb
 end
 
+compile '/blog/archivio/*', :rep => :nolayout do
+  filter :slim
+end
+
+compile '/blog/archivio/*' do
+  filter :slim
+  layout 'default'
+end
+
 compile 'blog/*' do
   filter :rdiscount
   filter :code_classifier, :pre_class => "highlight"
   filter :colorize_syntax, :colorizers => {:ruby => :pygmentize}
   filter :rubypants
+  filter :email_filter
   layout 'post'
 end
 
@@ -71,8 +101,12 @@ route '/assets/images/*' do
   "#{item.identifier.chop}.#{item[:extension]}"
 end
 
+route '/assets/javascripts/partials/*' do
+  nil
+end
+
 route '/assets/javascripts/*' do
-  "#{item.identifier.chop}.#{item[:extension]}"
+  "#{item.identifier.chop}.js"
 end
 
 route '/pages' do
@@ -85,6 +119,10 @@ end
 
 route '/blog/feed/' do
   '/feed.xml'
+end
+
+route '/blog/archivio/*', :rep => :nolayout do
+  "#{item.identifier.chop}-nolayout.html"
 end
 
 route '/blog/*' do

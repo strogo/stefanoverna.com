@@ -1,0 +1,10 @@
+- sorted_articles_by_day(@page_index, @per_page) do |date, articles|
+  .day-archive
+    p.date== I18n.l date, :format => :short
+    ul
+      - articles.each do |article|
+        li
+          h2== link_to article.attributes[:title], url_for(article)
+
+- if sorted_articles.size > @per_page * (@page_index + 2)
+  == link_to "Articoli più vecchi", "/blog/archivio/pagina-#{@page_index+2}.html", :"data-remote" => "/blog/archivio/pagina-#{@page_index+2}-nolayout.html"

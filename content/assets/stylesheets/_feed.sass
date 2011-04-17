@@ -1,0 +1,39 @@
+$proportion: 16px / 60px
+
+.feed
+  :display inline-block
+  :position relative
+  :width 60px * $proportion
+  :height 60px * $proportion
+  :border-color #ea6635
+  :text-transform lowercase
+  :text-indent -1000em
+  :font-size 64px * $proportion
+  :font-weight bold
+  :color #fff
+  :background #e36443
+  +border-radius(2px)
+  +box-shadow(rgba(0,0,0,0.4), 0, 0, 4px)
+  +linear-gradient(color-stops(#f19242, #e36443), top)
+
+  &:before
+    :content "\00a0"
+    :position absolute
+    :bottom 10px * $proportion
+    :left 10px * $proportion
+    :width 12px * $proportion
+    :height 12px * $proportion
+    :background #fff
+    +border-radius(12px * $proportion)
+
+  &:after
+    :content "\00a0"
+    :position absolute
+    :bottom 10px * $proportion
+    :left 10px * $proportion
+    :width 22px * $proportion
+    :height 22px * $proportion
+    :border-style double
+    :border-width 24px * $proportion 24px * $proportion 0 0
+    :border-color #fff
+    +border-top-right-radius(50px * $proportion)

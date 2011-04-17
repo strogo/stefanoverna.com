@@ -1,4 +1,9 @@
-.post
+.page
+  :margin-bottom 30px
+  :padding-bottom 30px
+  :border-bottom 5px solid #254470
+  
+.post, .page
   +clearfix
   
   img
@@ -6,7 +11,16 @@
     :margin-left 30px
     :margin-bottom 20px
     +border-radius(3px)
+    +rotate(2deg)
+  
+  .link
+    :margin 0px
+    :font-size 15px
+    :line-height 16px
     
+    a
+      :color #999
+  
   p, ol, blockquote
     :line-height 21px
     :margin 21px 0px
@@ -52,9 +66,6 @@
       &:hover
         :color #61B215
         
-  a.external:after
-    :content '\00a0 \21D2'
-  
   .actions
     +clearfix
     

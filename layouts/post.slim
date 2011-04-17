@@ -8,11 +8,13 @@ html lang="en"
 
       .page-content
 
-        .post
+        div class=(@item.attributes[:kind] == "article" ? "post" : "page")
           - if @item.attributes[:image]
             img src=@item.attributes[:image]
 
-          h2== link_to @item.attributes[:title], @item.attributes[:external_link] || url_for(@item), :class => (@item.attributes[:external_link] ? "external" : "")
+          h2== link_to @item.attributes[:title], url_for(@item)
+          - if @item.attributes[:external_link]
+            p.link== link_to @item.attributes[:external_link], @item.attributes[:external_link]
 
           .content
             == yield
@@ -20,7 +22,9 @@ html lang="en"
           - if @item.attributes[:kind] == "article"
             ul.actions
               li.permalink== link_to "Permalink", url_for(@item)
-              li.date= Date.parse(@item.attributes[:created_at])
+              li.date
+                time(datetime=Time.parse(@item.attributes[:created_at]).iso8601)
+                  = I18n.l DateTime.parse(@item.attributes[:created_at])
               li.comments== link_to "Commenta", "javascript:void(0);", :class => "tweet"
 
         - if @item.attributes[:kind] == "article"

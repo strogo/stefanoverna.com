@@ -9,7 +9,7 @@ task :p, :title, :link do |t, args|
 
   yaml_header = {
     "kind" => "article",
-    "created_at" => Time.now,
+    "created_at" => DateTime.now.strftime("%m/%d/%Y %H:%M"),
     "title" => args[:title]
   }
   yaml_header["external_link"] = args[:link] if args[:link]

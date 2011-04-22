@@ -12,7 +12,7 @@
 
 require 'compass'
 require 'i18n'
-require 'active_support'
+require 'active_support/all'
 
 Compass.add_project_configuration 'compass/config.rb' # when using Compass 0.10
 
@@ -23,10 +23,19 @@ preprocess do
   else
     @config[:base_url] = "http://stefanoverna.com"
   end
+
+  Time.zone = "Rome"
   ::I18n.backend.load_translations File.join('it.yml')
   ::I18n.locale = :it
 
-  page_size = 15
+  @items.each do |item|
+    if item.attributes[:created_at].is_a? String
+      item.attributes[:created_at] = Time.parse item.attributes[:created_at]
+    end
+  end
+
+  page_size = 15.0
+  puts "#{sorted_articles.size} articoli, #{(sorted_articles.size / page_size).ceil} pagine"
   (sorted_articles.size / page_size).ceil.times do |i|
     @items << Nanoc3::Item.new(
       "== render 'archive_page', :page_index => #{i}, :per_page => #{page_size}",

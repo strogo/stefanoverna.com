@@ -6,5 +6,5 @@
         li
           h2== link_to article.attributes[:title], url_for(article)
 
-- if sorted_articles.size > @per_page * (@page_index + 2)
+- if sorted_articles.size > @per_page * (@page_index + 1)
   == link_to "Articoli più vecchi", "/blog/archivio/pagina-#{@page_index+2}.html", :"data-remote" => "/blog/archivio/pagina-#{@page_index+2}-nolayout.html"

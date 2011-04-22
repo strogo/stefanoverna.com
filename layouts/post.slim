@@ -23,8 +23,8 @@ html lang="en"
             ul.actions
               li.permalink== link_to "Permalink", url_for(@item)
               li.date
-                time(datetime=Time.parse(@item.attributes[:created_at]).iso8601)
-                  = I18n.l DateTime.parse(@item.attributes[:created_at])
+                time datetime=@item.attributes[:created_at].iso8601
+                  = I18n.l @item.attributes[:created_at]
               li.comments== link_to "Commenta", "javascript:void(0);", :class => "tweet"
 
         - if @item.attributes[:kind] == "article"

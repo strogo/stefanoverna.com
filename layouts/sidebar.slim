@@ -21,4 +21,7 @@
   ul.navigation
     li== link_to "Chi Sono", "/pages/chi-sono.html"
     li== link_to "Archivio", "/"
-    li== link_to "Feed", "http://feeds.feedburner.com/stefanoverna", :class => "feed", :title => "Sottoscrivi il feed!"
+    li== link_to "Feed", "http://feeds.stefanoverna.com/stefanoverna", :class => "feed", :title => "Sottoscrivi il feed!"
+    li.feed-readers
+      a[href="http://feeds.stefanoverna.com/stefanoverna"]
+        img[src="http://feeds.feedburner.com/~fc/stefanoverna?bg=eeeeee&fg=444444" alt="I lettori del Feed"]
